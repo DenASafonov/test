@@ -42,53 +42,53 @@ $ git clone git://github.com/schacon/grit.git mygrit
 Определение состояния файлов
 Основной инструмент, используемый для определения, какие файлы в каком состоянии находятся — это команда git status. Если вы выполните эту команду сразу после клонирования, вы увидите что-то вроде этого:
 
-$ git status
-# On branch master
+(inline) $ git status
+(inline) # On branch master
 nothing to commit, working directory clean
 Это означает, что у вас чистый рабочий каталог, другими словами — в нём нет отслеживаемых изменённых файлов. Git также не обнаружил неотслеживаемых файлов, в противном случае они бы были перечислены здесь. И наконец, команда сообщает вам на какой ветке (branch) вы сейчас находитесь. Пока что это всегда ветка master — это ветка по умолчанию; в этой главе это не важно. В следующей главе будет подробно рассказано про ветки и ссылки.
 
 Предположим, вы добавили в свой проект новый файл, простой файл README. Если этого файла раньше не было, и вы выполните git status, вы увидите свой неотслеживаемый файл вот так:
 
-$ vim README
-$ git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#   README
+(inline) $ vim README
+(inline) $ git status
+(inline) # On branch master
+(inline) # Untracked files:
+(inline) #   (use "git add <file>..." to include in what will be committed)
+(inline) #
+(inline) #   README
 nothing added to commit but untracked files present (use "git add" to track)
 Понять, что новый файл README неотслеживаемый можно по тому, что он находится в секции "Untracked files" в выводе команды status. Статус "неотслеживаемый файл", по сути, означает, что Git видит файл, отсутствующий в предыдущем снимке состояния (коммите); Git не станет добавлять его в ваши коммиты, пока вы его явно об этом не попросите. Это предохранит вас от случайного добавления в репозиторий сгенерированных бинарных файлов или каких-либо других, которые вы и не думали добавлять. Мы хотели добавить README, так давайте сделаем это.
 
 Отслеживание новых файлов
 Для того чтобы начать отслеживать (добавить под версионный контроль) новый файл, используется команда git add. Чтобы начать отслеживание файла README, вы можете выполнить следующее:
 
-$ git add README
+(inline) $ git add README
 Если вы снова выполните команду status, то увидите, что файл README теперь отслеживаемый и индексированный:
 
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#   new file:   README
-#
+(inline) $ git status
+(inline) # On branch master
+(inline) # Changes to be committed:
+(inline) #   (use "git reset HEAD <file>..." to unstage)
+(inline) #
+(inline) #   new file:   README
+(inline) #
 Вы можете видеть, что файл проиндексирован по тому, что он находится в секции “Changes to be committed”. Если вы выполните коммит в этот момент, то версия файла, существовавшая на момент выполнения вами команды git add, будет добавлена в историю снимков состояния. Как вы помните, когда вы ранее выполнили git init, вы затем выполнили git add (файлы) — это было сделано для того, чтобы добавить файлы в вашем каталоге под версионный контроль. Команда git add принимает параметром путь к файлу или каталогу, если это каталог, команда рекурсивно добавляет (индексирует) все файлы в данном каталоге.
 
 Индексация изменённых файлов
 Давайте модифицируем файл, уже находящийся под версионным контролем. Если вы измените отслеживаемый файл benchmarks.rb и после этого снова выполните команду status, то результат будет примерно следующим:
 
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#   new file:   README
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#
-#   modified:   benchmarks.rb
-#
+(inline) $ git status
+(inline) # On branch master
+(inline) # Changes to be committed:
+(inline) #   (use "git reset HEAD <file>..." to unstage)
+(inline) #
+(inline) #   new file:   README
+(inline) #
+(inline) # Changes not staged for commit:
+(inline) #   (use "git add <file>..." to update what will be committed)
+(inline) #
+(inline) #   modified:   benchmarks.rb
+(inline) #
 Файл benchmarks.rb находится в секции “Changes not staged for commit” — это означает, что отслеживаемый файл был изменён в рабочем каталоге, но пока не проиндексирован. Чтобы проиндексировать его, необходимо выполнить команду git add (это многофункциональная команда, она используется для добавления под версионный контроль новых файлов, для индексации изменений, а также для других целей, например для указания файлов с исправленным конфликтом слияния). Выполним git add, чтобы проиндексировать benchmarks.rb, а затем снова выполним git status:
 
 $ git add benchmarks.rb
